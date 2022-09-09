@@ -8,7 +8,7 @@ var config = require('../config/dbconfig')
 
 var functions = {
     addNew: async function (req, res) {
-        if ((!req.body.name) || (!req.body.email) || (!req.body.password)) {
+        if ((!req.body.name) || (!req.body.email) || (!req.body.nic) || (!req.body.address) || (!req.body.contact_no) || (!req.body.password)) {
             
             res.json({success: false, msg: 'Enter all fields'})
         }
@@ -18,9 +18,12 @@ var functions = {
                 res.json({error: true, errmsg: 'not valid'});
             }
             else
-            {const newUser = User({
+            { newUser = User({
                 name: req.body.name,
                 email:req.body.email,
+                nic: req.body.nic,
+                address: req.body.address,
+                contact_no:req.body.contact_no,
                 password: req.body.password,
                
             });}
@@ -99,7 +102,17 @@ var functions = {
 //             console.log('Failed to retrieve the Course List: ' + err);
 //         }
 //     })
-// },   
+// },  
+
+filterDestination: async function  (req,res){
+    try{
+        const guide_add_plan = await Activity.find({Activities: "Hiking"})
+        res.json(guide_add_plan)
+    }
+    catch(err){
+        res.send('Error'+err)
+    }
+}, 
         
 viewActivity: async function  (req,res){
     try{

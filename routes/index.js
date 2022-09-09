@@ -38,5 +38,7 @@ router.post('/addplans', actions.addPlan)
 router.get('/viewcabs', actions.viewCab)
 router.post('/addcabs', actions.addCab)
 
+router.get('/filterDestination', actions.filterDestination)
+
 
 module.exports = router

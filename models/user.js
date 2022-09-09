@@ -10,6 +10,18 @@ var userSchema = new Schema({
         type: String,
         require: true
     },
+    nic: {
+        type: String,
+        require: false
+    },
+    address: {
+        type: String,
+        require: false
+    },
+    contact_no: {
+        type: String,
+        require: false
+    },
     password: {
         type: String,
         require: true
