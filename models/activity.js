@@ -5,14 +5,7 @@ var activitySchema = new Schema({
         type: String,
         require: true
     },
-    place: {
-        type: String,
-        require: true
-    },
-    description: {
-        type: String,
-        require: true
-    },
+    
     img:{
         type: String,
         require: true
