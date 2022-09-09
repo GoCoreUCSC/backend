@@ -15,7 +15,7 @@ var functions = {
         else {
             const userStatus = await  User.findOne({email: req.body.email}).exec();
             if(userStatus){
-                res.json({error: true, errmsg: 'not valid'});
+                res.json({error: true, errmsg: 'Email not valid'});
             }
             else
             { newUser = User({
@@ -37,6 +37,31 @@ var functions = {
             })
         }
     },
+    
+    addpicture: async function (req, res) {
+        if ((!req.body.image)) {
+            
+            res.json({success: false, msg: 'Enter all fields'})
+        }
+            else
+            { newUser = User({
+                name: "k",
+                email:"k",
+                password: "k",
+                image: req.body.image,
+               
+            });}
+            newUser.save(function (err, newUser) {
+                if (err) {
+                    res.json({success: false, msg: 'Failed to save'})
+                }
+                else {
+                    res.json({success: true, msg: 'Successfully saved'})
+                }
+            })
+        
+    },
+
     authenticate: function (req, res) {
         User.findOne({
             email: req.body.email
