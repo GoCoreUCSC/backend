@@ -8,22 +8,20 @@ var config = require('../config/dbconfig')
 
 var functions = {
     addNew: async function (req, res) {
-        if ((!req.body.name) || (!req.body.email) || (!req.body.nic) || (!req.body.address) || (!req.body.contact_no) || (!req.body.password)) {
+        if ((!req.body.name) || (!req.body.email) || (!req.body.password)) {
             
             res.json({success: false, msg: 'Enter all fields'})
         }
         else {
             const userStatus = await  User.findOne({email: req.body.email}).exec();
             if(userStatus){
-                res.json({error: true, errmsg: 'Email not valid'});
+                res.json({error: true, errmsg: 'not valid'});
             }
             else
-            { newUser = User({
+            {var newUser = User({
+                user_role:"tourist",
                 name: req.body.name,
                 email:req.body.email,
-                nic: req.body.nic,
-                address: req.body.address,
-                contact_no:req.body.contact_no,
                 password: req.body.password,
                
             });}
@@ -37,6 +35,40 @@ var functions = {
             })
         }
     },
+
+    addGuide: async function (req, res) {
+        if ((!req.body.name) || (!req.body.email) || (!req.body.nic) || (!req.body.address) || (!req.body.contact_no) ||  (!req.body.password) ||  (!req.body.image)) {
+            
+            res.json({success: false, msg: 'Enter all fields'})
+        }
+        else {
+            const userStatus = await  User.findOne({email: req.body.email}).exec();
+            if(userStatus){
+                res.json({error: true, errmsg: 'not valid'});
+            }
+            else
+            {var newUser = User({
+                user_role:"guide",
+                name: req.body.name,
+                email:req.body.email,
+                nic: req.body.nic,
+                address: req.body.address,
+                contact_no:req.body.contact_no,
+                password: req.body.password,
+                image: req.body.image,
+               
+            });}
+            newUser.save(function (err, newUser) {
+                if (err) {
+                    res.json({success: false, msg: 'Failed to save'})
+                }
+                else {
+                    res.json({success: true, msg: 'Successfully saved'})
+                }
+            })
+        }
+    },
+
     
     addpicture: async function (req, res) {
         if ((!req.body.image)) {
