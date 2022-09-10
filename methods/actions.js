@@ -37,7 +37,7 @@ var functions = {
     },
 
     addGuide: async function (req, res) {
-        if ((!req.body.name) || (!req.body.email) || (!req.body.nic) || (!req.body.address) || (!req.body.contact_no) ||  (!req.body.password) ||  (!req.body.image)) {
+        if ((!req.body.name) || (!req.body.email) || (!req.body.nic) || (!req.body.address) || (!req.body.contact_no) ||  (!req.body.password) ||  (!req.body.image) ||  (!req.body.certification)) {
             
             res.json({success: false, msg: 'Enter all fields'})
         }
@@ -56,6 +56,7 @@ var functions = {
                 contact_no:req.body.contact_no,
                 password: req.body.password,
                 image: req.body.image,
+                certification: req.body.certification,
                
             });}
             newUser.save(function (err, newUser) {
