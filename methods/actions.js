@@ -13,9 +13,9 @@ var functions = {
             res.json({success: false, msg: 'Enter all fields'})
         }
         else {
-            const userStatus = await  User.findOne({email: req.body.email}).exec();
+            const userStatus = await  User.findOne({email: req.body.email,  user_role: "tourist"}).exec();
             if(userStatus){
-                res.json({error: true, errmsg: 'not valid'});
+                res.status(403).send({success: false, msg: 'Email you entered is already registered'});
             }
             else
             {var newUser = User({
@@ -44,9 +44,9 @@ var functions = {
             res.json({success: false, msg: 'Enter all fields'})
         }
         else {
-            const userStatus = await  User.findOne({email: req.body.email}).exec();
+            const userStatus = await  User.findOne({email: req.body.email, user_role: "guide"}).exec();
             if(userStatus){
-                res.json({error: true, errmsg: 'not valid'});
+                res.status(403).send({success: false, msg: 'Email you entered is already registered'});
             }
             else
             {var newUser = User({
