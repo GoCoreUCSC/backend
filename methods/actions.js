@@ -3,6 +3,7 @@ var Activity = require('../models/activity')
 var Hotel = require('../models/hotel')
 var Plan = require('../models/tourPlan')
 var Cab = require('../models/cab')
+var Booking = require('../models/booking')
 var jwt = require('jwt-simple')
 var config = require('../config/dbconfig')
 
@@ -165,15 +166,7 @@ var functions = {
 //     })
 // },  
 
-filterDestination: async function  (req,res){
-    try{
-        const guide_add_plan = await Activity.find({Activities: "Hiking"})
-        res.json(guide_add_plan)
-    }
-    catch(err){
-        res.send('Error'+err)
-    }
-}, 
+
         
 viewActivity: async function  (req,res){
     try{
@@ -329,8 +322,202 @@ addCab: async function (req, res) {
     }
 },
 
+filterDestination: async function  (req,res){
+    try{
+        const guide_add_plan = await Activity.find({Activities: "Hiking"})
+        res.json(guide_add_plan)
+    }
+    catch(err){
+        res.send('Error'+err)
+    }
+}, 
 
-}
+viewUser: async function  (req,res){
+    try{
+        const users = await User.find({users: "Hiking"})
+        res.json(users)
+    }
+    catch(err){
+        res.send('Error'+err)
+    }
+}, 
+
+/**New */
+viewGuide: async function (req, res) {
+    try{
+        const users = await User.find({email: req.params.guide})
+        res.json(users)
+    }
+    catch(err){
+        res.send('Error'+err)
+    }
+},
+
+guideViewPlan: async function (req, res) {
+    try {
+      var ObjectId = require("mongodb").ObjectId;
+      const plan = await Plan.find({ guideId: new ObjectId(req.params.id) });
+      res.json(plan);
+      console.log(plan)
+    }
+     
+    catch (err) {
+      res.send("Error" + err);
+    }
+  },
+
+
+
+  viewRequestedPlan: async function (req, res) {
+    try {
+        var ObjectId = require("mongodb").ObjectId;
+        const plan = await Plan.find({ guideId: new ObjectId(req.params.id) },{ planId: 1, _id: 0 });
+        let temp = [];
+        let temp1 = [];
+        let temp3 = [];
+
+        plan.forEach((element) => {
+          temp.push(element.planId)
+        });
+             
+        const plan1 = await Booking.find({planId: {$in:temp}, status: "Requested"});
+
+        await Promise.all(plan1.map(async(element) => {
+            const tourist = await User.find({email: element['tourist'], user_role: "tourist"});
+            const plan2 = await Plan.find({ planId: element['planId']});
+            console.log("plan..............")
+            console.log(plan2)
+            console.log("tourist..............")
+            console.log(tourist)
+            tourist.forEach((element) => {
+              temp1.push(element)
+              console.log(element)
+            });
+            console.log("temp2")
+            console.log(temp1)
+            plan2.forEach((element) => {
+              temp3.push(element)
+              console.log(element)
+            });
+            console.log("temp3")
+            console.log(temp3)
+            
+            // console.log(tourist)
+            //  console.log(temp3)
+            //console.log(element,tourist,plan2)
+        }));
+        res.json({booking:plan1,plan:temp3,tourist:temp1});
+        // console.log(tourist)
+        // console.log(plan2)
+        //console.log(temp2)
+    } 
+    catch (err) {
+      res.send("Error" + err);
+    }
+  },
+
+  viewUpcomingPlan: async function (req, res) {
+    try {
+        var ObjectId = require("mongodb").ObjectId;
+        const plan = await Plan.find({ guideId: new ObjectId(req.params.id) },{ planId: 1, _id: 0 });
+        let temp = [];
+        let temp1 = [];
+        let temp3 = [];
+
+        plan.forEach((element) => {
+          temp.push(element.planId)
+        });
+             
+        const plan1 = await Booking.find({planId: {$in:temp}, status: "Booked"});
+
+        await Promise.all(plan1.map(async(element) => {
+            const tourist = await User.find({email: element['tourist'], user_role: "tourist"});
+            const plan2 = await Plan.find({ planId: element['planId']});
+            console.log("plan..............")
+            console.log(plan2)
+            console.log("tourist..............")
+            console.log(tourist)
+            tourist.forEach((element) => {
+              temp1.push(element)
+              console.log(element)
+            });
+            console.log("temp2")
+            console.log(temp1)
+            plan2.forEach((element) => {
+              temp3.push(element)
+              console.log(element)
+            });
+            console.log("temp3")
+            console.log(temp3)
+            
+            // console.log(tourist)
+            //  console.log(temp3)
+            //console.log(element,tourist,plan2)
+        }));
+        res.json({booking:plan1,plan:temp3,tourist:temp1});
+        // console.log(tourist)
+        // console.log(plan2)
+        //console.log(temp2)
+    } 
+    catch (err) {
+      res.send("Error" + err);
+    }
+  },
+
+  viewOngoingPlan: async function (req, res) {
+    try {
+        var ObjectId = require("mongodb").ObjectId;
+        const plan = await Plan.find({ guideId: new ObjectId(req.params.id) },{ planId: 1, _id: 0 });
+        let temp = [];
+        let temp1 = [];
+        let temp3 = [];
+
+        plan.forEach((element) => {
+          temp.push(element.planId)
+        });
+             
+        const plan1 = await Booking.find({planId: {$in:temp}, status: "Ongoing"});
+
+        await Promise.all(plan1.map(async(element) => {
+            const tourist = await User.find({email: element['tourist'], user_role: "tourist"});
+            const plan2 = await Plan.find({ planId: element['planId']});
+            console.log("plan..............")
+            console.log(plan2)
+            console.log("tourist..............")
+            console.log(tourist)
+            tourist.forEach((element) => {
+              temp1.push(element)
+              console.log(element)
+            });
+            console.log("temp2")
+            console.log(temp1)
+            plan2.forEach((element) => {
+              temp3.push(element)
+              console.log(element)
+            });
+            console.log("temp3")
+            console.log(temp3)
+            
+            // console.log(tourist)
+            //  console.log(temp3)
+            //console.log(element,tourist,plan2)
+        }));
+        res.json({booking:plan1,plan:temp3,tourist:temp1});
+        // console.log(tourist)
+        // console.log(plan2)
+        //console.log(temp2)
+    } 
+    catch (err) {
+      res.send("Error" + err);
+    }
+  },
+
+
+  }
+
+
+
+
 
 
 
