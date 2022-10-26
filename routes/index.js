@@ -41,6 +41,12 @@ router.get('/viewcabs', actions.viewCab)
 router.post('/addcabs', actions.addCab)
 
 router.get('/filterDestination', actions.filterDestination)
+router.get('/viewUser', actions.viewUser)
 
-
+/**New */
+router.get('/viewGuide/:guide', actions.viewGuide)
+router.get('/guideViewPlan/:id', actions.guideViewPlan)
+router.get('/viewRequestedPlan/:id', actions.viewRequestedPlan)
+router.get('/viewUpcomingPlan/:id', actions.viewUpcomingPlan)
+router.get('/viewOngoingPlan/:id', actions.viewOngoingPlan)
 module.exports = router

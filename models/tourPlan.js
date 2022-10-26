@@ -6,8 +6,12 @@ var tourPlanSchema = new Schema({
         type: String,
         require: true
     },
-    destination: {
+    planName: {
         type: String,
+        require: true
+    },
+    destination: {
+        type: Array,
         require: true
     },
 
@@ -23,10 +27,32 @@ var tourPlanSchema = new Schema({
         type: String,
         require: true
     },
-    description: {
+
+    activity: {
+        type: Array,
+        require: true
+    },
+
+    duration: {
+        type: Number,
+        require: true
+    },
+
+    max_travellers: {
+        type: Number,
+        require: true
+    },
+
+    payment_method: {
         type: String,
         require: true
     },
+
+    guideId: {
+        type: Object,
+        require: true
+    },
+
 })
 
 module.exports = mongoose.model('tourPlan', tourPlanSchema)
