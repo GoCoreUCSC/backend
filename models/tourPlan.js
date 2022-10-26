@@ -53,6 +53,8 @@ var tourPlanSchema = new Schema({
         require: true
     },
 
+    
+
 })
 
 module.exports = mongoose.model('tourPlan', tourPlanSchema)
