@@ -14,6 +14,7 @@ var userSchema = new Schema({
         type: String,
         require: true
     },
+
     nic: {
         type: String,
         require: false
@@ -26,20 +27,25 @@ var userSchema = new Schema({
         type: String,
         require: false
     },
-    password: {
-        type: String,
-        require: true
-    },
-
-    certification:[
-        {
-            type: String,
-        }
-    ],
     image: {
         type: String,
         
     },
+    certification:{
+        require:false,
+        type:[
+        {
+            type: String,
+        },]
+    
+    },
+
+    password: {
+        type: String,
+        require: true
+    },
+    
+
 })
 
 userSchema.pre('save', function (next) {
